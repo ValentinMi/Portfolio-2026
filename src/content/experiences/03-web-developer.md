@@ -1,5 +1,5 @@
 ---
-company: "Agence Digitale"
+company: "Adeo"
 position: "Développeur Web"
 period: "2018 - 2020"
 order: 3
