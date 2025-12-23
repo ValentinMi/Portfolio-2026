@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 
 const skills = await getCollection('skills');
 const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
 
-// Mapping des icônes SVG pour chaque technologie (utilisant Simple Icons / Devicons)
 const techIcons: Record<string, string> = {
   // Frontend
   "TypeScript": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
@@ -13,6 +13,10 @@ const techIcons: Record<string, string> = {
   "Next.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
   "Astro": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/astro/astro-original.svg",
   "Tailwind CSS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+  "Svelte": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg",
+  "SCSS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg",
+  "Playwright": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg",
+  "TanStack": "https://tanstack.com/images/logos/logo-color-600.png",
   // Backend
   "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
   "Express": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
@@ -20,6 +24,9 @@ const techIcons: Record<string, string> = {
   "PostgreSQL": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
   "MongoDB": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
   "GraphQL": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
+  "AdonisJS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/adonisjs/adonisjs-original.svg",
+  "Strapi": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/strapi.svg",
+  "Elysia": "https://elysiajs.com/assets/elysia.svg",
   // Tools
   "Git": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
   "Docker": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
@@ -27,6 +34,10 @@ const techIcons: Record<string, string> = {
   "AWS": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
   "Testing": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg",
   "Agile": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg",
+  "Linux": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+  "GCP": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
+  "n8n": "https://avatars.githubusercontent.com/u/45487711?s=200&v=4",
+  "Coolify": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/coolify.svg",
 };
 ---
 
@@ -42,9 +53,10 @@ const techIcons: Record<string, string> = {
             {skillGroup.data.items.map((skill, index) => (
               <div class="skill-item" style={`--delay: ${index * 0.1}s`}>
                 <div class="skill-icon">
-                  <img
-                    src={techIcons[skill.name] || ""}
+                  <Image
+                    src={techIcons[skill.name]}
                     alt={skill.name}
+                    inferSize={true}
                     loading="lazy"
                   />
                 </div>

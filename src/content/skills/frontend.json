@@ -4,14 +4,13 @@
   "items": [
     { "name": "TypeScript" },
     { "name": "React"},
-    { "name": "Next"},
-    { "name": "Tanstack"},
-    { "name": "Vue" },
+    { "name": "Next.js"},
+    { "name": "TanStack"},
+    { "name": "Vue.js" },
     { "name": "Svelte"},
     { "name": "Astro"},
-    { "name": "Scss"},
+    { "name": "SCSS"},
     { "name": "Tailwind CSS" },
     { "name": "Playwright" }
   ]
 }
-

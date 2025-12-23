@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import mePic from '../assets/me.png';
+
 interface Props {
   name: string;
   title: string;
@@ -10,7 +13,6 @@ interface Props {
   linkedin?: string;
   cvUrl: string;
 }
-
 const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } = Astro.props;
 ---
 
@@ -59,7 +61,7 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     <div class="hero-visual">
       <div class="avatar-container">
         <div class="avatar-placeholder">
-          <span>{name.charAt(0)}</span>
+          <Image class="avatar-pic" src={mePic} alt="me" loading="eager"  />
         </div>
         <div class="avatar-glow"></div>
       </div>
@@ -75,24 +77,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     padding: 2rem 1.5rem;
     position: relative;
     overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(34, 211, 238, 0.08) 0%, transparent 50%);
-    animation: rotate 30s linear infinite;
-    z-index: -1;
-  }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
   }
 
   .hero-content {
@@ -217,6 +201,26 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     z-index: 1;
   }
 
+  @keyframes spin-fast {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .avatar-pic {
+    border-radius: 50%;
+    transform: rotate(0deg);
+    transition: transform 10s cubic-bezier(0.17, 0.67, 0.35, 0.96);
+  }
+
+  .avatar-pic:hover {
+    transform: rotate(36000deg); /* 100 tours */
+    transition: transform 40s linear;
+  }
+
   .avatar-glow {
     position: absolute;
     top: 50%;
@@ -274,6 +278,8 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     .social-links {
       justify-content: center;
     }
+
+
   }
 </style>
 

@@ -2,14 +2,13 @@
   "category": "Backend",
   "order": 2,
   "items": [
-    { "name": "Node.Js"},
+    { "name": "Node.js"},
     { "name": "Elysia"},
     { "name": "NestJS"},
-    { "name": "Adonis"},
+    { "name": "AdonisJS"},
     { "name": "Strapi"},
     { "name": "PostgreSQL" },
     { "name": "MongoDB" },
     { "name": "GraphQL"}
   ]
 }
-
