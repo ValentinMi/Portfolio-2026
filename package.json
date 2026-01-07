@@ -10,6 +10,7 @@
     "start": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.1",
     "astro": "^5.16.5",
     "sharp": "^0.34.5"
   }

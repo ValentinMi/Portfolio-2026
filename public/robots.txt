@@ -1,0 +1,9 @@
+# Robots.txt pour valentin.webxfactory.fr
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://valentin.webxfactory.fr/sitemap-index.xml
+
+# Crawl-delay pour éviter la surcharge
+Crawl-delay: 1
