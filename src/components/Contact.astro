@@ -51,6 +51,32 @@ const { email, github, linkedin } = Astro.props;
   .contact {
     background: var(--color-bg);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.9)),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(50, 224, 196, 0.05) 10px,
+        rgba(50, 224, 196, 0.05) 20px
+      );
+    z-index: 0;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 1;
   }
 
   .contact-content {
@@ -60,47 +86,84 @@ const { email, github, linkedin } = Astro.props;
 
   .contact-intro {
     color: var(--color-text-muted);
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     line-height: 1.8;
-    margin: 0 0 2rem;
+    margin: 0 0 3rem;
   }
 
+  /* Tech Button Style */
   .contact-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    background: var(--color-primary);
+    color: #000;
+    transition: all 0.3s ease;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    margin-bottom: 3rem;
     font-size: 1.1rem;
-    margin-bottom: 2rem;
+    border: none;
+  }
+
+  .contact-btn:hover {
+    background: var(--color-primary-light);
+    box-shadow: 0 0 30px var(--color-primary);
+    transform: translateY(-2px);
+    color: #000;
   }
 
   .contact-social {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .social-link {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     color: var(--color-text-muted);
     font-weight: 500;
     transition: all 0.3s ease;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
   }
 
   .social-link:hover {
-    color: var(--color-primary-light);
+    color: #000;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
     transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--color-glow-primary);
   }
 
   .footer {
-    background: var(--color-bg-alt);
+    background: #000;
     padding: 2rem 1.5rem;
     text-align: center;
     border-top: 1px solid var(--color-border);
+    position: relative;
   }
 
   .footer p {
     margin: 0;
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
   }
 </style>
 

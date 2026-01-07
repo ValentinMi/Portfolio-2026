@@ -30,18 +30,23 @@ const {
 
 <style is:global>
 	:root {
-		--color-bg: #0f0f1a;
-		--color-bg-alt: #1a1a2e;
-		--color-primary: #6366f1;
-		--color-primary-light: #818cf8;
-		--color-secondary: #22d3ee;
-		--color-text: #f8fafc;
-		--color-text-muted: #94a3b8;
-		--color-border: #334155;
+		/* Kaiju No. 8 Palette */
+		--color-bg: #050505;       /* Deep Black */
+		--color-bg-alt: #0e0e12;   /* Slightly lighter black for cards/sections */
+		--color-primary: #32e0c4;  /* Kaiju Cyan/Greenish Blue */
+		--color-primary-light: #00fff2; /* Electric Cyan */
+		--color-secondary: #ff003c; /* Danger Red (Kaiju Eyes/Threat) - Accents */
+		--color-text: #ffffff;
+		--color-text-muted: #a0a0b0;
+		--color-border: rgba(45, 226, 230, 0.15); /* Subtle Cyan Border */
+		
 		--font-sans: 'Inter', system-ui, sans-serif;
 		--font-heading: 'Poppins', system-ui, sans-serif;
 		--max-width: 1200px;
-		--section-padding: 5rem 1.5rem;
+		--section-padding: 6rem 1.5rem;
+		
+		--glow-primary: 0 0 20px rgba(50, 224, 196, 0.3);
+		--glow-text: 0 0 10px rgba(0, 255, 242, 0.5);
 	}
 
 
@@ -58,7 +63,14 @@ const {
 		padding: 0;
 		width: 100%;
 		min-height: 100%;
-		background: var(--color-bg);
+		background-color: var(--color-bg);
+		/* Cyberpunk/Kaiju Grid Background */
+		background-image: 
+			linear-gradient(rgba(50, 224, 196, 0.03) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(50, 224, 196, 0.03) 1px, transparent 1px);
+		background-size: 40px 40px;
+		background-position: center top;
+		
 		color: var(--color-text);
 		font-family: var(--font-sans);
 		line-height: 1.6;

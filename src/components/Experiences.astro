@@ -39,7 +39,20 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
 
 <style>
   .experiences {
-    background: var(--color-bg-alt);
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .experiences::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(50, 224, 196, 0.05), transparent 60%);
+    pointer-events: none;
   }
 
   .timeline {
@@ -56,12 +69,13 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
+    background: var(--color-primary); /* Solid Blue */
+    box-shadow: 0 0 10px rgba(50, 224, 196, 0.5);
   }
 
   .timeline-item {
     position: relative;
-    padding-bottom: 3rem;
+    padding-bottom: 3.5rem;
   }
 
   .timeline-item:last-child {
@@ -75,23 +89,44 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: var(--color-primary);
-    border: 3px solid var(--color-bg-alt);
+    background: var(--color-bg);
+    border: 2px solid var(--color-primary);
     transform: translateX(-50%);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    box-shadow: 0 0 10px var(--color-primary);
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-item:hover .timeline-marker {
+    background: var(--color-primary);
+    box-shadow: 0 0 15px var(--color-primary), 0 0 30px var(--color-primary);
   }
 
   .timeline-content {
-    background: var(--color-bg);
-    border-radius: 1rem;
+    background: rgba(14, 14, 18, 0.8);
+    backdrop-filter: blur(5px);
+    border-radius: 0.5rem;
     padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    transition: all 0.3s ease;
+    border: 1px solid rgba(45, 226, 230, 0.1);
+    border-left: 2px solid rgba(45, 226, 230, 0.1); /* Prep for left bar */
+    transition: all 0.1s ease-out; /* Speed up transition */
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+    position: relative;
+    /* No overflow:hidden needed if we don't have sweeping shine */
   }
 
+  /* Terminal Selection Hover: Solid Left Bar, No Lift */
   .timeline-content:hover {
-    border-color: var(--color-primary);
-    transform: translateX(5px);
+    border-color: rgba(45, 226, 230, 0.3);
+    border-left: 4px solid var(--color-primary); /* Thick logic bar */
+    background: rgba(20, 20, 25, 0.95); /* Slight brighten */
+    transform: translateX(2px); /* Tiny nudge right, not lift */
+  }
+  
+  /* Ensure text colors pop */
+  .timeline-content:hover .company {
+    color: var(--color-primary);
+    text-shadow: none;
   }
 
   .timeline-header {
@@ -107,15 +142,21 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
     font-size: 1.25rem;
     color: var(--color-text);
     margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
   }
 
   .period {
     color: var(--color-primary-light);
-    font-size: 0.9rem;
-    font-weight: 500;
-    background: rgba(99, 102, 241, 0.1);
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(50, 224, 196, 0.1);
     padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
+    border-radius: 0;
+    border: 1px solid rgba(50, 224, 196, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .position {
@@ -123,12 +164,15 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
     font-weight: 600;
     margin: 0 0 1rem;
     font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .description {
     color: var(--color-text-muted);
     line-height: 1.7;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
   }
 
   .description :global(p) {
@@ -142,12 +186,20 @@ const sortedExperiences = experiences.sort((a, b) => a.data.order - b.data.order
   }
 
   .tech-tag {
-    background: var(--color-bg-alt);
+    background: transparent;
     color: var(--color-text-muted);
     padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.85rem;
+    border-radius: 2px;
+    font-size: 0.75rem;
     border: 1px solid var(--color-border);
+    font-family: monospace;
+    transition: all 0.3s ease;
+  }
+  
+  .tech-tag:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    box-shadow: 0 0 5px rgba(50, 224, 196, 0.2);
   }
 
   @media (max-width: 600px) {
