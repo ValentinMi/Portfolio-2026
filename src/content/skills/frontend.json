@@ -10,7 +10,7 @@
     { "name": "Svelte"},
     { "name": "Astro"},
     { "name": "SCSS"},
-    { "name": "Tailwind CSS" },
+    { "name": "Tailwind" },
     { "name": "Playwright" }
   ]
 }
