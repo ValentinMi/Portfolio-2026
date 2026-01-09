@@ -1,10 +1,10 @@
 ---
 const navItems = [
-  { label: 'Accueil', href: '#hero' },
-  { label: 'Expériences', href: '#experiences' },
-  { label: 'Compétences', href: '#skills' },
+  { label: "Accueil", href: "#hero" },
+  { label: "Expériences", href: "#experiences" },
+  { label: "Compétences", href: "#skills" },
   // { label: 'Projets', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: "Contact", href: "#contact" },
 ];
 ---
 
@@ -13,16 +13,43 @@ const navItems = [
     <a href="#hero" class="nav-logo">V.</a>
 
     <div class="nav-right">
+      <!-- Overlay for closing drawer on outside click -->
+      <div class="nav-overlay"></div>
+
       <ul class="nav-menu">
-        {navItems.map((item) => (
-          <li>
-            <a href={item.href} class="nav-link">{item.label}</a>
-          </li>
-        ))}
+        <!-- Close button inside drawer -->
+        <button class="nav-close" aria-label="Fermer le menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={item.href} class="nav-link">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
 
-
-      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <button
+        class="nav-toggle"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+      >
         <span class="hamburger"></span>
       </button>
     </div>
@@ -30,31 +57,53 @@ const navItems = [
 </nav>
 
 <script>
-  const toggle = document.querySelector('.nav-toggle');
-  const menu = document.querySelector('.nav-menu');
-  const navbar = document.querySelector('.navbar');
+  const toggle = document.querySelector(".nav-toggle");
+  const menu = document.querySelector(".nav-menu");
+  const navbar = document.querySelector(".navbar");
+  const overlay = document.querySelector(".nav-overlay");
+  const closeBtn = document.querySelector(".nav-close");
+
+  // Function to close menu
+  function closeMenu() {
+    toggle?.setAttribute("aria-expanded", "false");
+    menu?.classList.remove("active");
+    overlay?.classList.remove("active");
+  }
+
+  // Function to open menu
+  function openMenu() {
+    toggle?.setAttribute("aria-expanded", "true");
+    menu?.classList.add("active");
+    overlay?.classList.add("active");
+  }
 
   // Mobile menu toggle
-  toggle?.addEventListener('click', () => {
-    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!isExpanded));
-    menu?.classList.toggle('active');
+  toggle?.addEventListener("click", () => {
+    const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+    if (isExpanded) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
+  // Close menu on overlay click
+  overlay?.addEventListener("click", closeMenu);
+
+  // Close menu on close button click
+  closeBtn?.addEventListener("click", closeMenu);
+
   // Close menu on link click
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      toggle?.setAttribute('aria-expanded', 'false');
-      menu?.classList.remove('active');
-    });
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", closeMenu);
   });
 
   // Navbar scroll effect
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {
-      navbar?.classList.add('scrolled');
+      navbar?.classList.add("scrolled");
     } else {
-      navbar?.classList.remove('scrolled');
+      navbar?.classList.remove("scrolled");
     }
   });
 </script>
@@ -77,7 +126,6 @@ const navItems = [
     border-bottom: 1px solid rgba(50, 224, 196, 0.3);
     box-shadow: 0 4px 20px rgba(50, 224, 196, 0.1);
   }
-
 
   .nav-container {
     max-width: var(--max-width);
@@ -104,9 +152,9 @@ const navItems = [
     position: relative;
     padding-left: 0.5rem;
   }
-  
+
   .nav-logo::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 10%;
@@ -136,7 +184,7 @@ const navItems = [
   }
 
   .nav-link::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -155,7 +203,6 @@ const navItems = [
   .nav-link:hover::after {
     width: 100%;
   }
-
 
   .nav-toggle {
     display: none;
@@ -177,7 +224,7 @@ const navItems = [
 
   .hamburger::before,
   .hamburger::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 24px;
     height: 2px;
@@ -218,6 +265,25 @@ const navItems = [
       display: block;
     }
 
+    /* Overlay - dark backdrop */
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 5;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     .nav-menu {
       position: fixed;
       top: 0;
@@ -241,10 +307,35 @@ const navItems = [
       right: 0;
     }
 
+    /* Close button */
+    .nav-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-close:hover {
+      color: var(--color-primary);
+      transform: scale(1.1);
+    }
+
     .nav-link {
       font-size: 1.5rem;
       font-weight: 700;
     }
   }
-</style>
 
+  /* Hide overlay and close button on desktop */
+  @media (min-width: 769px) {
+    .nav-overlay,
+    .nav-close {
+      display: none;
+    }
+  }
+</style>
