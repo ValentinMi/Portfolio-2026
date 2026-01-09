@@ -150,21 +150,18 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
 </section>
 
 <script>
-  // Network Background Animation (restored)
   const canvas = document.getElementById("network-canvas") as HTMLCanvasElement;
   if (canvas) {
     const ctx = canvas.getContext("2d");
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    // Config - Drastically reduce particles on mobile for performance
     const isMobile = () => window.innerWidth < 768;
     const getParticleCount = () => (isMobile() ? 12 : 40);
     let particleCount = getParticleCount();
     const connectionDistance = isMobile() ? 120 : 150;
     const mouseParams = { x: 0, y: 0, radius: 200 };
 
-    // Handle high-DPI screens (fix for distorted circles on mobile)
     function setupCanvas() {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = width * dpr;
@@ -194,11 +191,9 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
         this.x += this.vx;
         this.y += this.vy;
 
-        // Bounce off edges
         if (this.x < 0 || this.x > width) this.vx *= -1;
         if (this.y < 0 || this.y > height) this.vy *= -1;
 
-        // Mouse interaction
         const dx = mouseParams.x - this.x;
         const dy = mouseParams.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -206,7 +201,7 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
         if (distance < mouseParams.radius) {
           const angle = Math.atan2(dy, dx);
           const force = (mouseParams.radius - distance) / mouseParams.radius;
-          const pushX = Math.cos(angle) * force * 2; // Push away slightly
+          const pushX = Math.cos(angle) * force * 2;
           const pushY = Math.sin(angle) * force * 2;
           this.x -= pushX;
           this.y -= pushY;
@@ -217,10 +212,9 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = "#32e0c4"; // Primary Color
+        ctx.fillStyle = "#32e0c4";
         ctx.fill();
 
-        // Glow
         ctx.shadowBlur = 10;
         ctx.shadowColor = "#32e0c4";
       }
@@ -243,7 +237,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
         p.update();
         p.draw();
 
-        // Connections
         for (let j = index + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -252,7 +245,7 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
 
           if (dist < connectionDistance) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(50, 224, 196, ${1 - dist / connectionDistance})`; // Fade out
+            ctx.strokeStyle = `rgba(50, 224, 196, ${1 - dist / connectionDistance})`;
             ctx.lineWidth = 1;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -267,17 +260,15 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     init();
     animate();
 
-    // Resize - recalculate particle count for mobile optimization
     window.addEventListener("resize", () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      ctx?.resetTransform(); // Reset scale before re-applying
+      ctx?.resetTransform();
       setupCanvas();
       particleCount = getParticleCount();
       init();
     });
 
-    // Mouse Move
     window.addEventListener("mousemove", (e) => {
       mouseParams.x = e.x;
       mouseParams.y = e.y;
@@ -302,7 +293,7 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     width: 100%;
     height: 100%;
     z-index: 0;
-    pointer-events: none; /* Let clicks pass through */
+    pointer-events: none;
     opacity: 0.6;
   }
 
@@ -328,7 +319,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     text-transform: uppercase;
   }
 
-  /* Clean High-Tech Name */
   .name {
     font-size: clamp(2.5rem, 7.5vw, 4.5rem);
     margin: 0 0 0.5rem;
@@ -398,7 +388,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     margin-bottom: 3rem;
   }
 
-  /* Tech Buttons */
   .btn {
     position: relative;
     display: inline-flex;
@@ -484,7 +473,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     box-shadow: 0 0 20px var(--color-glow-primary);
   }
 
-  /* Visual / Avatar */
   .hero-visual {
     display: flex;
     justify-content: center;
@@ -519,7 +507,6 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     transition: all 0.5s ease;
   }
 
-  /* Photo Hover Effect - Power Up */
   .avatar-container:hover .avatar-placeholder {
     border-color: #fff;
     box-shadow:
@@ -639,23 +626,22 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
 
   @media (max-width: 900px) {
     .hero {
-      justify-content: center; /* Ensure horizontal centering */
+      justify-content: center;
     }
 
     .hero-content {
       grid-template-columns: 1fr;
       text-align: center;
-      gap: 2rem; /* Reduce gap */
-      justify-items: center; /* Center grid items */
+      gap: 2rem;
+      justify-items: center;
     }
 
     .hero-visual {
       order: -1;
       margin-bottom: 1rem;
-      margin-top: 4rem; /* Avoid navbar overlap */
+      margin-top: 4rem;
     }
 
-    /* Reduce Avatar Size for Mobile */
     .avatar-container {
       width: 260px;
       height: 260px;
@@ -713,7 +699,7 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
     .bio {
       margin-left: auto;
       margin-right: auto;
-      width: 100%; /* Full width on mobile */
+      width: 100%;
       font-size: 1rem;
     }
 

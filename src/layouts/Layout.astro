@@ -67,7 +67,6 @@ const jsonLd = {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-		<!-- SEO Primary Meta Tags -->
 		<title>{title}</title>
 		<meta name="title" content={title} />
 		<meta name="description" content={description} />
@@ -76,7 +75,6 @@ const jsonLd = {
 		<meta name="robots" content="index, follow" />
 		<link rel="canonical" href={canonicalUrl} />
 
-		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
@@ -88,14 +86,12 @@ const jsonLd = {
 			content="Valentin Misiaszek - Portfolio"
 		/>
 
-		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={canonicalUrl} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={image} />
 
-		<!-- Schema.org JSON-LD -->
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
 		<meta name="generator" content={Astro.generator} />
@@ -148,7 +144,6 @@ const jsonLd = {
 		width: 100%;
 		min-height: 100%;
 		background-color: var(--color-bg);
-		/* Cyberpunk/Kaiju Grid Background */
 		background-image:
 			linear-gradient(rgba(50, 224, 196, 0.03) 1px, transparent 1px),
 			linear-gradient(

@@ -6,7 +6,6 @@ const skills = await getCollection("skills");
 const sortedSkills = skills.sort((a, b) => a.data.order - b.data.order);
 
 const techIcons: Record<string, string> = {
-  // Frontend
   TypeScript:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
   React:
@@ -25,7 +24,6 @@ const techIcons: Record<string, string> = {
   Playwright:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/playwright/playwright-original.svg",
   TanStack: "https://tanstack.com/images/logos/logo-color-600.png",
-  // Backend
   "Node.js":
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
   Express:
@@ -43,7 +41,6 @@ const techIcons: Record<string, string> = {
   Strapi:
     "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/strapi.svg",
   Elysia: "https://elysiajs.com/assets/elysia.svg",
-  // Tools
   Git: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
   Docker:
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
@@ -109,15 +106,14 @@ const techIcons: Record<string, string> = {
 
   .skill-category {
     background: rgba(10, 10, 15, 0.6);
-    border-radius: 2px; /* Sharper corners */
+    border-radius: 2px;
     padding: 2rem;
     border: 1px solid rgba(45, 226, 230, 0.1);
-    transition: all 0.2s ease; /* Snappier transition */
+    transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
   }
 
-  /* Tech corner accents - Static Industrial */
   .skill-category::before {
     content: "";
     position: absolute;
@@ -144,7 +140,6 @@ const techIcons: Record<string, string> = {
     transition: opacity 0.2s ease;
   }
 
-  /* Minimal Tech Hover: Border Only, No Shadow */
   .skill-category:hover {
     border-color: var(--color-primary);
     background: rgba(10, 10, 15, 0.9);
@@ -152,7 +147,7 @@ const techIcons: Record<string, string> = {
 
   .skill-category:hover::before,
   .skill-category:hover::after {
-    opacity: 1; /* Just light up, don't move */
+    opacity: 1;
   }
 
   .category-title {
@@ -180,8 +175,8 @@ const techIcons: Record<string, string> = {
   .skill-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem; /* Increased gap */
-    justify-content: center; /* Center items */
+    gap: 1.5rem;
+    justify-content: center;
   }
 
   .skill-item {
@@ -193,14 +188,14 @@ const techIcons: Record<string, string> = {
     border-radius: 1px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.1s ease-out; /* Speed up transition */
+    transition: all 0.1s ease-out;
     cursor: default;
     animation: fadeInUp 0.5s ease forwards;
     animation-delay: var(--delay);
     opacity: 0;
-    width: 100px; /* Fixed minimal width base */
-    flex: 1 1 100px; /* Grow and shrink properly */
-    max-width: 140px; /* Prevent becoming too wide */
+    width: 100px;
+    flex: 1 1 100px;
+    max-width: 140px;
     position: relative;
   }
 
@@ -215,7 +210,6 @@ const techIcons: Record<string, string> = {
     }
   }
 
-  /* Item Hover: High Contrast Frame, No Movement */
   @keyframes bumpJump {
     0% {
       transform: translateY(0);
@@ -234,7 +228,6 @@ const techIcons: Record<string, string> = {
   }
 
   .skill-item:hover .skill-icon img {
-    /* "Petit rebond" - Jump up and down */
     animation: bumpJump 0.3s ease-in-out;
   }
 
@@ -244,15 +237,15 @@ const techIcons: Record<string, string> = {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.1s ease-out; /* Speed up */
+    transition: transform 0.1s ease-out;
   }
 
   .skill-icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: all 0.1s ease-out; /* Speed up */
-    filter: none; /* No grayscale, full color always */
+    transition: all 0.1s ease-out;
+    filter: none;
   }
 
   .skill-name {
@@ -263,7 +256,7 @@ const techIcons: Record<string, string> = {
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: color 0.1s ease-out; /* Speed up */
+    transition: color 0.1s ease-out;
   }
 
   .skill-item:hover .skill-name {
