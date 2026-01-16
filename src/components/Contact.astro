@@ -91,7 +91,7 @@ const { email, github, linkedin } = Astro.props;
 
 <style>
   .contact {
-    background: var(--color-bg);
+    background: transparent;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -104,7 +104,7 @@ const { email, github, linkedin } = Astro.props;
     left: 0;
     width: 100%;
     height: 100%;
-    background:
+    /* background:
       linear-gradient(rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.9)),
       repeating-linear-gradient(
         45deg,
@@ -112,7 +112,8 @@ const { email, github, linkedin } = Astro.props;
         transparent 10px,
         rgba(50, 224, 196, 0.05) 10px,
         rgba(50, 224, 196, 0.05) 20px
-      );
+      ); */
+    pointer-events: none;
     z-index: 0;
   }
 
