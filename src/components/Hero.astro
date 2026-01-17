@@ -185,12 +185,14 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
       vx: number;
       vy: number;
       size: number;
+      initialSpeed: number;
 
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = (Math.random() - 0.5) * 1.5;
+        this.vx = (Math.random() - 0.5) * 0.8; // Reduced speed
+        this.vy = (Math.random() - 0.5) * 0.8; // Reduced speed
+        this.initialSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
         this.size = Math.random() * 2 + 1;
       }
 
@@ -198,17 +200,14 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        
-        // Bottom collision with neon effect
-        if (this.y > height) {
-          this.y = height; // Clamp to bottom
-          this.vy *= -1; // Bounce up
-          impacts.push({ x: this.x, life: 1.0, size: this.size }); // Register impact
+        // Apply drag if moving too fast
+        const currentSpeed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        if (currentSpeed > this.initialSpeed * 1.5) {
+           this.vx *= 0.95;
+           this.vy *= 0.95;
         }
-        
-        if (this.y < 0) this.vy *= -1;
 
+        // Mouse interaction first
         const dx = mouseParams.x - this.x;
         const dy = mouseParams.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -217,10 +216,35 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
           const angle = Math.atan2(dy, dx);
           const force = (mouseParams.radius - distance) / mouseParams.radius;
           const pushX = Math.cos(angle) * force * 2;
-          const pushY = Math.sin(angle) * force * 2;
+          let pushY = Math.sin(angle) * force * 2;
+
+          // Prevent mouse from pushing particle into the floor if it's already low
+          // pushY is negative when mouse is above particle (dy < 0), causing subtraction to push down
+          if (pushY < 0 && this.y > height - mouseParams.radius) {
+             pushY = 0;
+          }
+
           this.x -= pushX;
           this.y -= pushY;
         }
+
+        // Wall collisions
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        
+        // Bottom collision with neon effect
+        if (this.y > height) {
+          this.y = height; // Clamp to bottom
+          
+          // Stabilized bounce logic
+          this.vy = -Math.abs(this.vy); 
+          if (Math.abs(this.vy) < 1.2) {
+             this.vy = -1.2; // Adjusted minimum bounce energy for slower particles
+          }
+          
+          impacts.push({ x: this.x, life: 1.0, size: this.size }); // Register impact
+        }
+        
+        if (this.y < 0) this.vy *= -1;
       }
 
       draw() {
@@ -277,11 +301,31 @@ const { name, title, subtitle, bio, email, location, github, linkedin, cvUrl } =
           impact.x, height, 0,
           impact.x, height, scale
         );
-        radial.addColorStop(0, `rgba(50, 224, 196, ${opacity * 0.8})`);
+        radial.addColorStop(0, `rgba(255, 255, 255, ${opacity})`); // White hot center
+        radial.addColorStop(0.2, `rgba(50, 224, 196, ${opacity * 0.8})`);
         radial.addColorStop(1, "rgba(50, 224, 196, 0)");
         
         ctx.fillStyle = radial;
         ctx.fillRect(impact.x - scale, height - scale, scale * 2, scale);
+
+        // Draw shockwave arc
+        ctx.beginPath();
+        ctx.arc(impact.x, height, scale * (1.5 - impact.life * 0.5), Math.PI, 0);
+        ctx.strokeStyle = `rgba(50, 224, 196, ${opacity * 0.5})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Draw vertical spike
+        const spikeHeight = scale * 2 * impact.life;
+        const spikeGradient = ctx.createLinearGradient(
+          impact.x, height,
+          impact.x, height - spikeHeight
+        );
+        spikeGradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+        spikeGradient.addColorStop(1, `rgba(50, 224, 196, 0)`);
+        
+        ctx.fillStyle = spikeGradient;
+        ctx.fillRect(impact.x - 1, height - spikeHeight, 2, spikeHeight);
       }
     }
 
